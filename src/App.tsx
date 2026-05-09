@@ -306,10 +306,57 @@ export default function App() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
+      checkCursorState(e.clientX, e.clientY);
+    };
+
+    const handleScroll = () => {
+      checkCursorState(mouseX.get(), mouseY.get());
+    };
+
+    const checkCursorState = (x: number, y: number) => {
+      const elements = document.elementsFromPoint(x, y);
+      if (!elements || elements.length === 0) return;
+      
+      const el = elements[0];
+      
+      const hoverable = el.closest('[data-cursor-hoverable="true"]');
+      setIsHovering(!!hoverable);
+
+      const inverse = el.closest('[data-cursor-inverse="true"]');
+      setIsInverseCursor(!!inverse);
+
+      const logoHover = el.closest('[data-cursor-logo="true"]');
+      setIsLogoHovered(!!logoHover);
+
+      const cursorTextEl = el.closest('[data-cursor-text]');
+      if (cursorTextEl) {
+        setCursorText(cursorTextEl.getAttribute('data-cursor-text') || '');
+      } else {
+        setCursorText('');
+      }
+
+      const cursorVariantEl = el.closest('[data-cursor-variant]');
+      if (cursorVariantEl) {
+        setCursorVariant(cursorVariantEl.getAttribute('data-cursor-variant') || 'default');
+      } else {
+        setCursorVariant('default');
+      }
+
+      const projectIndexEl = el.closest('[data-cursor-project]');
+      if (projectIndexEl) {
+        setHoveredProjectIndex(Number(projectIndexEl.getAttribute('data-cursor-project')));
+      } else {
+        setHoveredProjectIndex(null);
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [mouseX, mouseY]);
 
   const handleMouseEnter = () => setIsHovering(true);
@@ -466,7 +513,7 @@ export default function App() {
               {/* Left Side (Cream) */}
               <div className="w-full h-[40%] md:h-full md:w-[45%] bg-cream p-6 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-maroon relative">
                  <div className="absolute top-6 right-6 md:hidden">
-                   <button onClick={() => { setIsMenuOpen(false); setIsInverseCursor(false); }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-maroon p-2 hover:bg-maroon/10 rounded-full transition-colors cursor-pointer">
+                   <button onClick={() => { setIsMenuOpen(false); setIsInverseCursor(false); }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} data-cursor-hoverable="true" className="text-maroon p-2 hover:bg-maroon/10 rounded-full transition-colors cursor-pointer">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                    </button>
                  </div>
@@ -483,11 +530,11 @@ export default function App() {
               {/* Right Side (Maroon Dark) */}
               <div 
                 className="w-full h-[60%] md:h-full md:w-[55%] bg-maroon p-6 md:p-12 flex flex-col justify-center relative shadow-[-20px_0_50px_rgba(0,0,0,0.2)] z-10"
-                onMouseEnter={() => setIsInverseCursor(true)}
+                onMouseEnter={() => setIsInverseCursor(true)} data-cursor-inverse="true"
                 onMouseLeave={() => setIsInverseCursor(false)}
               >
                 <div className="absolute top-6 right-6 md:top-12 md:right-12 hidden md:block">
-                   <button onClick={() => { setIsMenuOpen(false); setIsInverseCursor(false); }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-cream hover:text-olive hover:rotate-90 transition-all duration-300 p-2 cursor-pointer">
+                   <button onClick={() => { setIsMenuOpen(false); setIsInverseCursor(false); }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} data-cursor-hoverable="true" className="text-cream hover:text-olive hover:rotate-90 transition-all duration-300 p-2 cursor-pointer">
                       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                    </button>
                  </div>
@@ -508,7 +555,7 @@ export default function App() {
                         key={item.label}
                         href={`#${item.id}`}
                         onClick={(e) => scrollToSection(item.id, e)}
-                        onMouseEnter={handleMouseEnter} 
+                        onMouseEnter={handleMouseEnter} data-cursor-hoverable="true"
                         onMouseLeave={handleMouseLeave}
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -598,7 +645,7 @@ export default function App() {
         <div className="border border-maroon/30 p-2 md:p-4 bg-cream/80 backdrop-blur-sm pointer-events-auto">
           <div className="flex gap-4 items-center">
             <div 
-              onMouseEnter={() => { handleMouseEnter(); setIsLogoHovered(true); }}
+              onMouseEnter={() => { handleMouseEnter(); setIsLogoHovered(true); }} data-cursor-hoverable="true" data-cursor-logo="true"
               onMouseLeave={() => { handleMouseLeave(); setIsLogoHovered(false); }}
               className="group relative cursor-pointer flex flex-col items-start gap-1"
             >
@@ -629,7 +676,7 @@ export default function App() {
           </div>
         </div>
         <div className="flex flex-col items-end gap-2 pointer-events-auto cursor-pointer mt-4 md:mt-2 mr-0 md:mr-[0.5rem]" onClick={() => setIsMenuOpen(true)}>
-            <motion.div whileHover={{ x: -2 }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="font-mono text-xs uppercase tracking-widest relative overflow-hidden group px-3 py-2 w-full text-right bg-maroon/5 border border-maroon/20 hover:border-maroon/40 hover:text-olive flex items-center justify-between gap-6 backdrop-blur-sm">
+            <motion.div whileHover={{ x: -2 }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} data-cursor-hoverable="true" className="font-mono text-xs uppercase tracking-widest relative overflow-hidden group px-3 py-2 w-full text-right bg-maroon/5 border border-maroon/20 hover:border-maroon/40 hover:text-olive flex items-center justify-between gap-6 backdrop-blur-sm">
               <span>MENU</span>
               <div className="flex flex-col gap-[3px] mt-[1px]">
                 <div className="w-5 h-[1.5px] bg-current"></div>
@@ -933,7 +980,7 @@ export default function App() {
 
             <div 
               className="relative w-full aspect-video md:aspect-[21/9] border-t-[3px] border-b-[3px] border-maroon/5 overflow-hidden group cursor-none bg-cream"
-              onMouseEnter={() => { handleMouseEnter(); setCursorVariant('drag'); setCursorText('SCROLL'); }}
+              onMouseEnter={() => { handleMouseEnter(); setCursorVariant('drag'); setCursorText('SCROLL'); }} data-cursor-hoverable="true" data-cursor-variant="drag" data-cursor-text="SCROLL"
               onMouseLeave={() => { handleMouseLeave(); setCursorVariant('default'); setCursorText(''); }}
             >
               {/* Wireframe Layer (Bottom) */}
@@ -1007,7 +1054,7 @@ export default function App() {
               <motion.div 
                 style={{ clipPath: clipPathValue }}
                 className="absolute inset-0 bg-gradient-to-r from-olive to-maroon-dark text-cream flex shadow-2xl border-r-[3px] border-maroon will-change-transform cursor-none overflow-hidden font-rantera"
-                onMouseEnter={() => setIsInverseCursor(true)}
+                onMouseEnter={() => setIsInverseCursor(true)} data-cursor-inverse="true"
                 onMouseLeave={() => setIsInverseCursor(false)}
               >
                  {/* Background Image */}
@@ -1129,7 +1176,7 @@ export default function App() {
                 onClick={() => {
                   setExpandedProjectIndex(expandedProjectIndex === index ? null : index);
                 }}
-                onMouseEnter={() => { handleMouseEnter(); setHoveredProjectIndex(index); setCursorText('VIEW'); setCursorVariant('view'); }}
+                onMouseEnter={() => { handleMouseEnter(); setHoveredProjectIndex(index); setCursorText('VIEW'); setCursorVariant('view'); }} data-cursor-hoverable="true" data-cursor-project={index} data-cursor-text="VIEW" data-cursor-variant="view"
                 onMouseLeave={() => { handleMouseLeave(); setHoveredProjectIndex(null); setCursorText(''); setCursorVariant('default'); }}
                 initial={{ opacity: 0, y: 50, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -1230,7 +1277,7 @@ export default function App() {
                 </motion.h2>
                 <div className="flex flex-wrap gap-2">
                   {['Figma', 'Framer', 'React', 'Tailwind', 'Product Management', 'C++', 'Python', 'UX Research'].map(skill => (
-                    <div key={skill} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="border border-maroon/20 bg-maroon/5 px-3 py-2 font-mono text-xs uppercase tracking-wider hover:bg-olive hover:text-cream transition-colors cursor-default hover:border-olive text-maroon">
+                    <div key={skill} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} data-cursor-hoverable="true" className="border border-maroon/20 bg-maroon/5 px-3 py-2 font-mono text-xs uppercase tracking-wider hover:bg-olive hover:text-cream transition-colors cursor-default hover:border-olive text-maroon">
                       {skill}
                     </div>
                   ))}
@@ -1275,7 +1322,7 @@ export default function App() {
              </div>
            </div>
         </motion.section>
-        <section id="contact" onMouseEnter={() => setIsInverseCursor(true)} onMouseLeave={() => setIsInverseCursor(false)} className="pt-16 border-t-[8px] border-maroon relative z-10 bg-maroon-dark -mx-6 md:-mx-12 px-6 md:px-12 overflow-hidden">
+        <section id="contact" onMouseEnter={() => setIsInverseCursor(true)} onMouseLeave={() => setIsInverseCursor(false)} data-cursor-inverse="true" className="pt-16 border-t-[8px] border-maroon relative z-10 bg-maroon-dark -mx-6 md:-mx-12 px-6 md:px-12 overflow-hidden">
           
           {/* Marquee */}
           <div className="absolute top-0 left-0 w-full overflow-hidden border-b border-maroon/30 py-4 bg-maroon-dark z-20">
@@ -1355,7 +1402,7 @@ export default function App() {
                       whileTap={{ scale: 0.95 }}
                       type="submit"
                       disabled={isSubmitting}
-                      onMouseEnter={handleMouseEnter} 
+                      onMouseEnter={handleMouseEnter} data-cursor-hoverable="true"
                       onMouseLeave={handleMouseLeave} 
                       className="inline-flex justify-between items-center gap-8 bg-cream text-maroon px-6 py-4 font-mono font-medium uppercase tracking-widest transition-colors hover:bg-olive hover:text-cream w-fit mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
