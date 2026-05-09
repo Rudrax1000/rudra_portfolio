@@ -1150,7 +1150,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="md:col-span-4 pt-2">
-                    <div className="hidden md:block">
+                    <div className="block mt-4 md:mt-0">
                       <p className={`font-mono text-sm text-maroon/60 group-hover:text-cream/80 group-[.is-expanded]:text-cream/80 transition-colors duration-300 ease-out ${expandedProjectIndex === index ? '' : 'line-clamp-2'}`}>{project.description}</p>
                       <button 
                         onClick={(e) => { 
