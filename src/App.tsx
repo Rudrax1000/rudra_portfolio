@@ -805,7 +805,7 @@ export default function App() {
           style={{ y: aboutY }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           id="about" 
           className="max-w-7xl mx-auto py-8 relative z-10 mt-8 mb-12"
@@ -816,7 +816,7 @@ export default function App() {
                <motion.div 
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
+                 viewport={{ once: false }}
                  transition={{ duration: 0.8, ease: "easeOut" }}
                  className="font-mono text-xs text-maroon mb-12 flex items-start justify-between uppercase tracking-widest font-bold border-b border-maroon/20 pb-4 xl:-mt-[2px]"
                >
@@ -834,7 +834,7 @@ export default function App() {
                  <motion.h2 
                    initial={{ y: "100%" }}
                    whileInView={{ y: "0%" }}
-                   viewport={{ once: true }}
+                   viewport={{ once: false }}
                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                    className="font-display text-[7.5vw] md:text-[8vw] xl:text-[7vw] leading-[0.8] tracking-wider uppercase m-0 text-maroon block transform-gpu origin-bottom"
                  >
@@ -846,7 +846,7 @@ export default function App() {
                  <motion.h2 
                    initial={{ y: "100%" }}
                    whileInView={{ y: "0%" }}
-                   viewport={{ once: true }}
+                   viewport={{ once: false }}
                    transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                    className="font-display text-[7.5vw] md:text-[8vw] xl:text-[7vw] leading-[0.85] tracking-wider uppercase m-0 flex flex-col relative z-10 transform-gpu origin-bottom"
                  >
@@ -857,7 +857,7 @@ export default function App() {
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
+                 viewport={{ once: false }}
                  transition={{ delay: 0.2 }}
                  className="flex flex-col sm:flex-row gap-6 font-mono text-xs sm:text-sm leading-relaxed text-maroon font-medium border-l-[3px] border-maroon pl-6 mb-16"
                >
@@ -876,7 +876,7 @@ export default function App() {
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
+                 viewport={{ once: false }}
                  transition={{ delay: 0.3 }}
                  className="mb-8 xl:mb-0 relative"
                >
@@ -928,7 +928,7 @@ export default function App() {
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
+                 viewport={{ once: false }}
                  transition={{ delay: 0.4 }}
                  className="grid grid-cols-2 gap-8 sm:gap-12 pt-4 justify-between"
                >
@@ -971,7 +971,7 @@ export default function App() {
             <motion.h2 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-[6vw] md:text-[7vw] leading-[0.8] tracking-wider uppercase m-0 text-maroon block origin-bottom mb-12 text-center transform-gpu"
             >
@@ -1132,7 +1132,7 @@ export default function App() {
         <motion.section 
           initial={{ opacity: 0, y: 100, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="py-12 overflow-hidden border-y-[3px] border-maroon/5 -mx-6 md:-mx-12 mb-16 z-10 relative bg-cream-dark"
         >
@@ -1154,7 +1154,7 @@ export default function App() {
         <motion.section 
           initial={{ opacity: 0, y: 100, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           id="works" 
           className="max-w-7xl mx-auto relative z-10 mb-16 border-t-[3px] border-maroon/20 pt-16"
@@ -1180,7 +1180,7 @@ export default function App() {
                 onMouseLeave={() => { handleMouseLeave(); setHoveredProjectIndex(null); setCursorText(''); setCursorVariant('default'); }}
                 initial={{ opacity: 0, y: 50, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-5%" }}
+                viewport={{ once: false, margin: "-5%" }}
                 transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className={`group relative border-t border-maroon/20 py-8 px-4 md:px-8 transition-colors duration-300 ease-out block overflow-hidden cursor-pointer ${expandedProjectIndex === index ? 'bg-maroon is-expanded' : 'hover:bg-maroon'}`}
               >
@@ -1260,7 +1260,7 @@ export default function App() {
         <motion.section 
           initial={{ opacity: 0, y: 100, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           id="playground"
           className="max-w-7xl mx-auto mt-40 mb-20 md:mb-32 relative z-10"
@@ -1270,7 +1270,7 @@ export default function App() {
                 <motion.h2 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   className="font-display text-4xl md:text-5xl mb-12 uppercase tracking-wide text-maroon"
                 >
                   CAPABILITIES
@@ -1288,7 +1288,7 @@ export default function App() {
                   <motion.h2 
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     className="font-display text-4xl md:text-5xl uppercase tracking-wide text-maroon"
                   >
                     HISTORY_
@@ -1340,7 +1340,7 @@ export default function App() {
               <motion.div 
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 variants={{
                   hidden: { opacity: 0 },
                   visible: {
