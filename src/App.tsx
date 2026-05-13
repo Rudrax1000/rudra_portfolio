@@ -1427,9 +1427,7 @@ export default function App() {
                 <div className="flex items-center gap-8 md:gap-12 border-b border-cream/20 pb-4 w-full">
                   <span className="w-28 shrink-0 text-left tracking-widest text-cream/70 font-bold border-r border-cream/20 pr-4">FLD.03_SOC</span>
                   <div className="flex-1 flex gap-4 justify-start pl-4">
-                    <a href="https://github.com/rudrax1000" target="_blank" rel="noreferrer" className="text-cream hover:text-olive hover:-translate-y-1 transition-transform">GitHub</a>
                     <a href="http://www.linkedin.com/in/rudrax1000/" target="_blank" rel="noreferrer" className="text-cream hover:text-olive hover:-translate-y-1 transition-transform">LinkedIn</a>
-                    <a href="#" className="text-cream hover:text-olive hover:-translate-y-1 transition-transform">Twitter</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-8 md:gap-12 pt-4 w-full">
